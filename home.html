@@ -11,12 +11,12 @@
     integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
   <link rel="stylesheet" href="./css/style.css" />
 
-  <title>Hello, world!</title>
+  <title>Check works</title>
 </head>
 
 <body>
-  <img class="content" id="mouseviewer" src="statics/viewer4.png">
-  <div class="d-flex flex-column">
+  <img class="content" id="mouseviewer" src="./statics/viewer4.png">
+  <div class="d-flex flex-column" style="margin-top: 7rem;">
     <div class="d-inline-flex">
       <video id="video1" class="w-50" height="405px">
         <source src="" type="video/mp4" />
@@ -54,6 +54,7 @@
         let y = e.clientY
         if (x > 1350) x = 1400
         if (y > 500) y = 500
+        if (y < 50) y = 50
         mouseviewer.style.setProperty('--x', x - 1400 + "px");
         mouseviewer.style.setProperty('--y', y - 500 + "px");
       });
