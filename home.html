@@ -2,11 +2,9 @@
 <html lang="en">
 
 <head>
-  <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-  <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
     integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
   <link rel="stylesheet" href="./style.css" />
@@ -15,6 +13,7 @@
 </head>
 
 <body>
+  <div id="whitecover" class="cover"></div>
   <img class="content" id="mouseviewer" src="./statics/viewer.png">
   <div class="d-flex flex-column" style="margin-top: 7rem;">
     <div class="d-inline-flex">
@@ -28,7 +27,6 @@
     <div class="d-inline-flex">
       <audio id="audio">
         <source src="./statics/music.mp3" type="audio/ogg">
-        Your browser does not support the audio element.
       </audio>
     </div>
   </div>
@@ -36,6 +34,13 @@
 
 
   <script type="text/javascript">
+    const videoSources = [
+      "https://media.w3.org/2010/05/sintel/trailer.mp4",
+      "https://www.w3schools.com/html/movie.mp4",
+      "https://www.w3schools.com/howto/rain.mp4"
+    ]
+
+
     function playAudio(play) {
       const audio = document.getElementById('audio');
       if (play) audio.play()
@@ -53,6 +58,8 @@
     var mouseviewer = document.getElementById("mouseviewer");
 
     function beginMove() {
+      const cover = document.getElementById('whitecover')
+      cover.remove()
       document.addEventListener("mousemove", (e) => {
         let x = e.clientX
         let y = e.clientY
@@ -62,16 +69,10 @@
         mouseviewer.style.setProperty('--x', x - 1400 + "px");
         mouseviewer.style.setProperty('--y', y - 500 + "px");
       });
+      document.removeEventListener("click", beginMove)
       document.addEventListener("mousedown", mouseDown)
       document.addEventListener("mouseup", mouseUp)
-      // document.removeEventListener("click", beginMove)
     }
-
-    const videoSources = [
-      "https://media.w3.org/2010/05/sintel/trailer.mp4",
-      "https://www.w3schools.com/html/movie.mp4",
-      "https://www.w3schools.com/howto/rain.mp4"
-    ]
 
     let videoSourceIndex = 0
     function selectVideoSource() {
@@ -88,7 +89,6 @@
 
     function playVideo(id) {
       const video = document.getElementById(id);
-      // video.controls = true;
       video.muted = true;
 
       const source = video.children[0]
@@ -103,8 +103,8 @@
       createVideoEndedListener('video2')
       playVideo('video1')
       playVideo('video2')
-      // document.addEventListener("click", beginMove)
-      beginMove()
+      document.addEventListener("click", beginMove)
+      // beginMove()
     }
 
 

@@ -10,6 +10,17 @@ body {
 
 
 
+.cover {
+    --x: -200px;
+    --y: -60px;
+    top: var(--y);
+    left: var(--x);
+    position: fixed;
+    background-color: white;
+    width: 2800px;
+    height: 1000px;
+}
+
 .content {
     --x: -200px;
     --y: -60px;
@@ -17,5 +28,5 @@ body {
     left: var(--x);
     position: fixed;
     width: 2800px;
-    height: 1000px
+    height: 1000px;
 }
