@@ -22,8 +22,8 @@ body {
 }
 
 .content {
-    --x: -200px;
-    --y: -60px;
+    --x: 0px;
+    --y: 0px;
     top: var(--y);
     left: var(--x);
     position: fixed;
