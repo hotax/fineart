@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial;
+            font-size: 17px;
+        }
+
+        
+
+        .content {
+            --x: -1200px;
+            --y: -1200px;
+            position: fixed;
+            top: var(--y);
+            left: var(--x);
+            background: rgba(255, 255, 255, 1);
+            color: white;
+            width: 1200px;
+            height: 1200px;
+            padding: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <video autoplay muted loop id="myVideo" width="100%">
+        <source src="https://www.w3schools.com/howto/rain.mp4" type="video/mp4">
+    </video>
+    <div class="content w-100" id="mouseviewer">
+        <img src="statics/viewer4.png" width="2400px" height="2400px">
+    </div>
+
+    <script>
+        var video = document.getElementById("myVideo");
+        var btn = document.getElementById("myBtn");
+        var mouseviewer = document.getElementById("mouseviewer");
+
+        function myFunction() {
+            if (video.paused) {
+                video.play();
+                btn.innerHTML = "Pause";
+            } else {
+                video.pause();
+                btn.innerHTML = "Play";
+            }
+        }
+
+        function beginMove() {
+            document.addEventListener("mousemove", (e) => {
+                let x = e.clientX
+                let y = e.clientY
+                if (x > 1200) x = 1200
+                mouseviewer.style.setProperty('--x', x - 1200 + "px");
+                mouseviewer.style.setProperty('--y', y - 1200 + "px");
+            });
+            document.removeEventListener("click", beginMove)
+        }
+
+        document.addEventListener("click", beginMove)
+
+    </script>
+
+</body>
+
+</html>

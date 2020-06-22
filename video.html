@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial;
+            font-size: 17px;
+        }
+
+        video {
+            position: fixed;
+            top: 0;
+            width: 1000px;
+            z-index: -1;
+        }
+
+        video:hover {
+            background-color: yellow;
+        }
+
+        .content {
+            --x: 0px;
+            --y: 0px;
+            position: fixed;
+            top: var(--y);
+            left: var(--x);
+            background: rgba(255, 255, 255, 1);
+            color: white;
+            width: 100px;
+            height: 100px;
+            padding: 20px;
+        }
+
+        .shadowboard,
+        .clipboard {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 1000px;
+            height: 600px;
+            color: #f1f1f1;
+            background: rgba(0, 0, 0, 0.9);
+        }
+    </style>
+</head>
+
+<body>
+    <video autoplay muted loop id="myVideo">
+        <source src="https://www.w3schools.com/howto/rain.mp4" type="video/mp4">
+    </video>
+    <div class="shadowboard" style="opacity: 0.4;"></div>
+    <div class="clipboard" style="clip-path: polygon(50% 0%, 79% 28%, 81% 48%, 67% 59%, 52% 45%, 54% 30%, 60% 19%);">
+    </div>
+    </div>
+    <div class="content" id="mouseviewer">
+    </div>
+
+    <script>
+        var video = document.getElementById("myVideo");
+        var btn = document.getElementById("myBtn");
+        var mouseviewer = document.getElementById("mouseviewer");
+
+        function myFunction() {
+            if (video.paused) {
+                video.play();
+                btn.innerHTML = "Pause";
+            } else {
+                video.pause();
+                btn.innerHTML = "Play";
+            }
+        }
+
+        document.addEventListener("mousemove", (e) => {
+            mouseviewer.style.setProperty('--x', e.clientX - 50 + "px");
+            mouseviewer.style.setProperty('--y', e.clientY - 50 + "px");
+        });
+    </script>
+
+</body>
+
+</html>
