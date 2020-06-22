@@ -1,0 +1,21 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial;
+    font-size: 17px;
+}
+
+
+
+.content {
+    --x: -200px;
+    --y: -60px;
+    top: var(--y);
+    left: var(--x);
+    position: fixed;
+    width: 2800px;
+    height: 1000px
+}

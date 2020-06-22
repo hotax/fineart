@@ -9,13 +9,13 @@
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
     integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-  <link rel="stylesheet" href="./css/style.css" />
+  <link rel="stylesheet" href="./style.css" />
 
   <title>Check works</title>
 </head>
 
 <body>
-  <img class="content" id="mouseviewer" src="./statics/viewer4.png">
+  <img class="content" id="mouseviewer" src="./statics/viewer.png">
   <div class="d-flex flex-column" style="margin-top: 7rem;">
     <div class="d-inline-flex">
       <video id="video1" class="w-50" height="405px">
@@ -25,9 +25,9 @@
         <source src="" type="video/mp4" />
       </video>
     </div>
-    <div class="d-inline-flex" onmousedown="mouseDown()" onmouseup="mouseUp()">
-      <audio>
-        <source src="./statics/clx.mp3" type="audio/ogg">
+    <div class="d-inline-flex">
+      <audio id="audio">
+        <source src="./statics/music.mp3" type="audio/ogg">
         Your browser does not support the audio element.
       </audio>
     </div>
@@ -36,14 +36,18 @@
 
 
   <script type="text/javascript">
+    function playAudio(play) {
+      const audio = document.getElementById('audio');
+      if (play) audio.play()
+      else audio.pause()
+    }
+
     function mouseDown() {
-      console.log('mouse down')
-      // document.getElementById("myP").style.color = "red";
+      playAudio(true)
     }
 
     function mouseUp() {
-      console.log('mouse up')
-      // document.getElementById("myP").style.color = "green";
+      playAudio(false)
     }
 
     var mouseviewer = document.getElementById("mouseviewer");
@@ -58,6 +62,8 @@
         mouseviewer.style.setProperty('--x', x - 1400 + "px");
         mouseviewer.style.setProperty('--y', y - 500 + "px");
       });
+      document.addEventListener("mousedown", mouseDown)
+      document.addEventListener("mouseup", mouseUp)
       // document.removeEventListener("click", beginMove)
     }
 
