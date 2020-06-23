@@ -26,7 +26,7 @@
     </div>
     <div class="d-inline-flex">
       <audio id="audio">
-        <source src="./statics/music.mp3" type="audio/ogg">
+        <source type="audio/ogg">
       </audio>
     </div>
   </div>
@@ -34,46 +34,71 @@
 
 
   <script type="text/javascript">
-    const audioSources = [
-      "https://www.w3schools.com/tags/horse.ogg",
-      "./statics/music.mp3"
-    ]
-
-    const videoSources = [
-      "https://media.w3.org/2010/05/sintel/trailer.mp4",
-      "https://www.w3schools.com/html/movie.mp4",
-      "https://www.w3schools.com/howto/rain.mp4"
-    ]
-
-    function setupAudio () {
-
+    const sourcesMap = {
+      video1: [
+        "https://media.w3.org/2010/05/sintel/trailer.mp4",
+        "https://www.w3schools.com/html/movie.mp4",
+        "https://www.w3schools.com/howto/rain.mp4"
+      ],
+      video2: [
+        "https://media.w3.org/2010/05/sintel/trailer.mp4",
+        "https://www.w3schools.com/html/movie.mp4",
+        "https://www.w3schools.com/howto/rain.mp4"
+      ],
+      audio: [
+        "https://www.w3schools.com/tags/horse.ogg",
+        "https://www.w3schools.com/tags/horse.ogg",
+        "https://www.w3schools.com/tags/horse.ogg",
+        "./statics/music.mp3",
+        "https://www.w3schools.com/tags/horse.ogg",
+        "https://www.w3schools.com/tags/horse.ogg"
+      ],
     }
 
-    function playAudio(play) {
-      const audio = document.getElementById('audio');
-      const muted = audio.muted
-      console.log(`play is ${play}, and attr is ${muted}`)
-      if (!play) audio.muted = true
+    function getRandomInt(max, min = 0) {
+      min = Math.ceil(min);
+      max = Math.floor(max);
+      return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+    function selectSource(id) {
+      const sources = sourcesMap[id]
+      const idx = getRandomInt(sources.length - 1)
+      console.log(`select ${id} source ${idx}`)
+      return sources[idx]
+    }
+
+    const audio = document.getElementById('audio');
+    const audioSource = audio.children[0]
+
+    function playAudio () {
+      audio.muted = true
+      const url = selectSource('audio')
+      audioSource.setAttribute("src", url);
+      audio.load()
+      audio.play()
+    }
+
+    function muteAudio(muted) {
+      if (muted) audio.muted = true
       else {
         audio.muted = false
       }
     }
 
-    function mouseDown() {
-      playAudio(true)
+    function setupAudio() {
+      audio.onended = function () {
+        console.log(`audio ended .........`)
+        playAudio()
+      }
+      playAudio()
     }
-
-    function mouseUp() {
-      playAudio(false)
-    }
-
-    var mouseviewer = document.getElementById("mouseviewer");
 
     function beginMove() {
       const cover = document.getElementById('whitecover')
       cover.remove()
-      const audio = document.getElementById('audio')
-      audio.play()
+      setupAudio()
+      const mouseviewer = document.getElementById("mouseviewer");
       document.addEventListener("mousemove", (e) => {
         let x = e.clientX
         let y = e.clientY
@@ -84,19 +109,14 @@
         mouseviewer.style.setProperty('--y', y - 500 + "px");
       });
       document.removeEventListener("click", beginMove)
-      document.addEventListener("mousedown", mouseDown)
-      document.addEventListener("mouseup", mouseUp)
-    }
-
-    let videoSourceIndex = 0
-    function selectVideoSource() {
-      if (videoSourceIndex >= videoSources.length) videoSourceIndex = 0
-      return videoSources[videoSourceIndex++]
+      document.addEventListener("mousedown", () => { muteAudio(false)})
+      document.addEventListener("mouseup", () => { muteAudio(true)})
     }
 
     function createVideoEndedListener(id) {
       const video = document.getElementById(id);
       video.addEventListener("ended", () => {
+        console.log(`${id} ended .............`)
         playVideo(id)
       })
     }
@@ -106,7 +126,7 @@
       video.muted = true;
 
       const source = video.children[0]
-      const url = selectVideoSource()
+      const url = selectSource(id)
       source.setAttribute("src", [url]);
       video.load()
       video.play()
