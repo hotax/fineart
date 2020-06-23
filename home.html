@@ -34,17 +34,29 @@
 
 
   <script type="text/javascript">
+    const audioSources = [
+      "https://www.w3schools.com/tags/horse.ogg",
+      "./statics/music.mp3"
+    ]
+
     const videoSources = [
       "https://media.w3.org/2010/05/sintel/trailer.mp4",
       "https://www.w3schools.com/html/movie.mp4",
       "https://www.w3schools.com/howto/rain.mp4"
     ]
 
+    function setupAudio () {
+
+    }
 
     function playAudio(play) {
       const audio = document.getElementById('audio');
-      if (play) audio.play()
-      else audio.pause()
+      const muted = audio.muted
+      console.log(`play is ${play}, and attr is ${muted}`)
+      if (!play) audio.muted = true
+      else {
+        audio.muted = false
+      }
     }
 
     function mouseDown() {
@@ -60,6 +72,8 @@
     function beginMove() {
       const cover = document.getElementById('whitecover')
       cover.remove()
+      const audio = document.getElementById('audio')
+      audio.play()
       document.addEventListener("mousemove", (e) => {
         let x = e.clientX
         let y = e.clientY
